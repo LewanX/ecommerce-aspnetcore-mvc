@@ -17,5 +17,17 @@ namespace eTickets.Controllers
 
             return View(await _context.Actors.ToListAsync());
         }
+        public ActionResult Delete(int id)
+        {
+            var actor=_context.Actors.Find(id);
+            if (actor == null)
+            {
+                return NotFound();
+            }
+            _context.Actors.Remove(actor);
+            _context.SaveChanges();
+            TempData["DeleteSuccess"] = true;
+            return RedirectToAction("Index");
+        }
     }
 }
