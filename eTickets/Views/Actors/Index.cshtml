@@ -23,8 +23,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @if (Model.Any())
                     {
+                       foreach (var item in Model)
+                    {
+                       
                         <tr>
                             <td class="align-middle">
                                 <img class="rounded-circle" src="@item.ProfilePictureURL" alt="@item.FullName" style="max-width: 150px">
@@ -37,22 +40,53 @@
                             </td>
                             <td class="align-middle">
                                 <div class="d-flex flex-wrap align-items-center">
-                                    <a href="#" class="btn btn-outline-primary btn-sm mr-2"><i class="fas fa-edit"></i> Edit</a>
-                                    <a href="#" class="btn btn-outline-info btn-sm mr-2"><i class="fas fa-trash"></i> Details</a>
-                                    <a href="@Url.Action("Delete", "Actors", new { id = item.Id })" class="btn btn-outline-danger btn-sm"><i class="fas fa-book"></i> Delete</a>
+                                    <a class="btn btn-outline-primary btn-sm mr-2"  asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i> Edit</a>
+                                    <a class="btn btn-outline-info btn-sm mr-2" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-trash"></i> Details</a>
+                                    <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id" ><i class="fas fa-book"></i> Delete</a>
                                 </div>
+                            </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                No hay datos disponibles
                             </td>
                         </tr>
                     }
+              
                 </tbody>
             </table>
+           
         </div>
     </div>
 </div>
+<div class="text-white" style="position:fixed; right:25px; bottom:25px;">
+    <a asp-controller="Actors" asp-action="Create" class="btn btn-success"> <i class="bi bi-plus-circle"></i>Add New </a>
 
-   @if (TempData["DeleteSuccess"] != null && (bool)TempData["DeleteSuccess"])
+</div>
+        
+   
+@{
+   if (ViewBag.CreateSuccess != null && ViewBag.CreateSuccess)
+    {
+        <script>
+            alertify.success('¡El actor ha sido creado!');
+        </script>
+    }
+    if (ViewBag.EditSuccess != null && ViewBag.EditSuccess)
+    {
+        <script>
+            alertify.success('¡El actor ha sido editado!');
+        </script>
+    }
+    if (TempData["DeleteSuccess"] != null && (bool)TempData["DeleteSuccess"])
 {
     <script>
        alertify.error('Actor eliminado exitosamente');
     </script>
+
+}
 }

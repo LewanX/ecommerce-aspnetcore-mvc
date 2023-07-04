@@ -11,11 +11,12 @@ namespace eTickets.Controllers
         {
             _context = context;
         }
+      
         public async Task<IActionResult> Index()
         {
             var allMovies = await _context.Movies.ToListAsync();
 
-            return View();
+            return View(allMovies);
         }
     }
 }
