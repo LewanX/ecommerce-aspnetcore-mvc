@@ -30,9 +30,9 @@
                             </td>
                             <td class="align-middle">
                                 <div class="d-flex flex-wrap align-items-center">
-                                    <a href="#" class="btn btn-outline-primary btn-sm mr-2"><i class="fas fa-edit"></i> Edit</a>
-                                    <a href="#" class="btn btn-outline-info btn-sm mr-2"><i class="fas fa-trash"></i> Details</a>
-                                    <a href="#" class="btn btn-outline-danger btn-sm"><i class="fas fa-book"></i> Delete</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm mr-2"><i class="fas fa-edit"></i> Edit</a>
+                                    <a  asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm mr-2"><i class="fas fa-trash"></i> Details</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm"><i class="fas fa-book"></i> Delete</a>
                                 </div>
                             </td>
                         </tr>

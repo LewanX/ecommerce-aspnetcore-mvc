@@ -13,8 +13,7 @@ namespace eTickets.Data
             {
                 var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
 
-                context.Database.EnsureCreated();
-
+             
                 //Cinema
                 if (!context.Cinemas.Any())
                 {
@@ -131,6 +130,13 @@ namespace eTickets.Data
                             ProfilePictureURL = "http://dotnethow.net/images/producers/producer-5.jpeg"
                         }
                     });
+                   
+
+                    if (context.Producers.Any())
+                    {
+                        var maxProducerId = context.Producers.Max(p => p.Id);
+                        context.Database.ExecuteSqlRaw($"DBCC CHECKIDENT ('Producers', RESEED, {maxProducerId})");
+                    }
                     context.SaveChanges();
                 }
                 //Movies
@@ -214,7 +220,7 @@ namespace eTickets.Data
                     context.SaveChanges();
                 }
                 //Actors & Movies
-                if (!context.Actors_Movies.Any())
+                /*if (!context.Actors_Movies.Any())
                 {
                     context.Actors_Movies.AddRange(new List<Actor_Movie>()
                     {
@@ -234,11 +240,7 @@ namespace eTickets.Data
                             ActorId = 1,
                             MovieId = 2
                         },
-                         new Actor_Movie()
-                        {
-                            ActorId = 4,
-                            MovieId = 2
-                        },
+                     
 
                         new Actor_Movie()
                         {
@@ -267,11 +269,7 @@ namespace eTickets.Data
                             ActorId = 3,
                             MovieId = 4
                         },
-                        new Actor_Movie()
-                        {
-                            ActorId = 4,
-                            MovieId = 4
-                        },
+                      
 
 
                         new Actor_Movie()
@@ -284,11 +282,7 @@ namespace eTickets.Data
                             ActorId = 3,
                             MovieId = 5
                         },
-                        new Actor_Movie()
-                        {
-                            ActorId = 4,
-                            MovieId = 5
-                        },
+                     
                         new Actor_Movie()
                         {
                             ActorId = 5,
@@ -301,19 +295,17 @@ namespace eTickets.Data
                             ActorId = 3,
                             MovieId = 6
                         },
-                        new Actor_Movie()
-                        {
-                            ActorId = 4,
-                            MovieId = 6
-                        },
+                      
                         new Actor_Movie()
                         {
                             ActorId = 5,
                             MovieId = 6
                         },
                     });
+
+                  
                     context.SaveChanges();
-                }
+                }*/
                 //DBCC CHECKIDENT ('Actors', RESEED, 0); en caso de eliminar todo
 
             }

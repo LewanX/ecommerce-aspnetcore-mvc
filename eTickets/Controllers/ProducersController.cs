@@ -1,4 +1,5 @@
 ﻿using eTickets.Data;
+using eTickets.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,15 +7,28 @@ namespace eTickets.Controllers
 {
     public class ProducersController : Controller
     {
-        private readonly AppDbContext _context;
-        public ProducersController(AppDbContext context)
+        private readonly IProducersService _service;
+        public ProducersController(IProducersService service)
         {
-            _context = context;
+            _service = service;
         }
+        public async Task<IActionResult> Delete(int id)
+        {         
+            await _service.DeleteAsync(id);
+            TempData["DeleteSuccess"] = true;
+            return RedirectToAction(nameof(Index));
+        }
+
         public async Task <IActionResult> Index()
-        {
+        {var data=await _service.GetAllAsync();
           
-            return View(await _context.Producers.ToListAsync());
+            return View(data);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var data = await _service.GetByIdAsync(id);
+            return View(data);
         }
     }
 }
